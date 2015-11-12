@@ -1,0 +1,34 @@
+name: aniichat
+version: 0.0.1
+inherits: php:5.6
+type: main
+platform: ubuntu@12.04
+description:
+keywords:
+packages:
+    - id: mysql:5.6
+      env:
+          MYSQL_ROOT_PASSWORD: rootpassword
+script: |
+    sudo apt-get update
+    sudo apt-get install -y --force-yes zlib1g-dev uuid-dev libicu-dev g++ php5-gd php-pear php5-dev php5-cli php5-mysqlnd mysql-client
+    sudo apt-get install -y pkg-config libtool build-essential wget git
+    wget http://download.zeromq.org/zeromq-3.2.5.tar.gz
+    tar xzvf zeromq-3.2.5.tar.gz
+    cd zeromq-3.2.5
+    sudo ./configure
+    sudo make
+    sudo make install
+    cd
+    git clone git://github.com/mkoppanen/php-zmq.git
+    cd php-zmq
+    sudo ./configure
+    sudo make
+    sudo make install
+    sudo echo "extension=zmq.so" > /usr/local/etc/php/php.ini
+    docker-php-ext-install zmq
+    pecl install uuid
+    sudo echo "extension=uuid.so" > /usr/local/etc/php/php.ini
+    docker-php-ext-install intl mbstring zip mysqli pdo pdo_mysql
+    php composer.phar config -g github-oauth.github.com 05b2285475676a760033e52f2f19251a1048fa5b
+    php composer.phar install --no-interaction

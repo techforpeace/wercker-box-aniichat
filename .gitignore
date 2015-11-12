@@ -1,0 +1,12 @@
+# MAC
+.DS_Store
+
+# Windows
+Thumbs.db
+
+# Eclipse project files
+/.cache
+.project
+/.settings
+.buildpath
+
