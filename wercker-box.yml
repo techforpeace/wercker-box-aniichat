@@ -32,3 +32,4 @@ script: |
     docker-php-ext-install intl mbstring zip mysqli pdo pdo_mysql
     php composer.phar config -g github-oauth.github.com 05b2285475676a760033e52f2f19251a1048fa5b
     php composer.phar install --no-interaction
+
